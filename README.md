@@ -48,7 +48,7 @@ The installers wipe the entire hard drive on your system, as it installs Ubuntu 
 
 ## Latest Status:
 
-### July 13, 2012:
+### July 13, 2012
 At this time, I've commited my work-in progress. WARNING: as it is a work-in-progress, YMMV and things may not work, especially with environmental differences. This is proof-of-concept for me, at this time.
 
 At this time, the files in include/iso directory, when added to an Ubuntu 12.04 server .iso image, will run the start of a puppet master (enprius Puppet) and puppet client (enpribus OpenNebula) when booting and installing said image with such selections. You will have two functional ubuntu instances after that.
