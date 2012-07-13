@@ -41,8 +41,8 @@ hassinger.paul@ipaul.com
 The installers wipe the entire hard drive on your system, as it installs Ubuntu without user interaction. Use it on a system where you can wipe data.
 
 ## Requirements
-- This is intended to be run with Ubuntu 12.04 64-bit Server
-- You will require 2 available servers. One server will be a Puppet master (virtualized OK), another server will be the OpenNebula (Bare-Metal Virtualization CPU instructions required)
+- This is intended to be run with Ubuntu 12.04 64-bit
+- You will require 3 available servers. One server will be a Puppet master (virtualized OK), another server will be a git puppet configuration repo (Virtualized OK, not yet completed), abd another server will be the OpenNebula (Bare-Metal Virtualization CPU instructions required)
 
 ======================================================================
 
@@ -51,6 +51,6 @@ The installers wipe the entire hard drive on your system, as it installs Ubuntu 
 ### July 13, 2012
 At this time, I've commited my work-in progress. WARNING: as it is a work-in-progress, YMMV and things may not work, especially with environmental differences. This is proof-of-concept for me, at this time.
 
-At this time, the files in include/iso directory, when added to an Ubuntu 12.04 server .iso image, will run the start of a puppet master (enprius Puppet) and puppet client (enpribus OpenNebula) when booting and installing said image with such selections. You will have two functional ubuntu instances after that.
+At this time, the files in include/iso directory, when added to an Ubuntu 12.04 server .iso image, will run the start of a puppet master (enprius Puppet) and puppet client (enpribus OpenNebula) when booting and installing said image with such selections. You will have two functional ubuntu instances after that. The enpribus suite is not yet started but is intended to load all virtualizable and management instances on one machine. The git repo instance is not yet started.
 
 Other notes: I currently use DHCP with static IPs in my environment which have DNS names assigned. I acknowledge this will need to change in the future, I'm doing more of proof-of-concept at the moment.
