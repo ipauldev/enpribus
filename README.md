@@ -14,9 +14,9 @@ The intention is that this will cover a complete system for business, provide ba
 The project is in its infancy but so far, the framework and idea I wish to implement is as follows:
 
 - Based off of Ubuntu, shell scripts are intended to modify the Ubuntu installer. A preseeded .iso Ubuntu installer is created.
-- The preseeded .iso is run on a bare-metal machine and installs enprius Suite and installs a Puppet master and git repository  (for puppet configuration) into virtualized machines.
+- The preseeded .iso is run on a bare-metal machine and installs enpribus Suite and installs a Puppet master and git repository  (for puppet configuration) into virtualized machines.
 - Alternatively, the preseeded .iso runs separate installations of the Puppet master and the git repository which accomodates existing-infrastructure installation such as existing virtualized environments or elastic computing providers.
-- The preseeded .iso is run on a bare-metal machine and installs enprius OpenNebula nodes to increase in-house virtualized capacity/HA, etc.
+- The preseeded .iso is run on a bare-metal machine and installs enpribus OpenNebula nodes to increase in-house virtualized capacity/HA, etc.
 - DNS configuration would be auto-confgured. Puppet would be able to configure itself, and recreate an entire environment from a backup.
 - Resources could be moved from bare-metal virtualized hosts to elastic computing resources in the "cloud".
 - A centralized web dashboard would be available for all administration of projects
@@ -51,6 +51,6 @@ The installers wipe the entire hard drive on your system, as it installs Ubuntu 
 ### July 13, 2012
 At this time, I've commited my work-in progress. WARNING: as it is a work-in-progress, YMMV and things may not work, especially with environmental differences. This is proof-of-concept for me, at this time.
 
-At this time, the files in include/iso directory, when added to an Ubuntu 12.04 server .iso image, will run the start of a puppet master (enprius Puppet) and puppet client (enpribus OpenNebula) when booting and installing said image with such selections. You will have two functional ubuntu instances after that. The enpribus suite is not yet started but is intended to load all virtualizable and management instances on one machine. The git repo instance is not yet started.
+At this time, the files in include/iso directory, when added to an Ubuntu 12.04 server .iso image, will run the start of a puppet master (enpribus Puppet) and puppet client (enpribus OpenNebula) when booting and installing said image with such selections. You will have two functional ubuntu instances after that. The enpribus suite is not yet started but is intended to load all virtualizable and management instances on one machine. The git repo instance is not yet started.
 
 Other notes: I currently use DHCP with static IPs in my environment which have DNS names assigned. I acknowledge this will need to change in the future, I'm doing more of proof-of-concept at the moment.
