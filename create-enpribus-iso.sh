@@ -11,6 +11,14 @@ INSTALLER_ISO=${BUILD_DIR}/installer.iso
 ENPRIBUS_ISO=${DIST_DIR}/enpribus.iso
 INSTALLER_CD=${BUILD_DIR}/installer-cd
 
+#Ensure helper directories exist
+if [ ! -d "${BUILD_DIR}" ]; then
+	mkdir ${BUILD_DIR}
+fi
+if [ ! -d "${DIST_DIR}" ]; then
+	mkdir ${DIST_DIR}
+fi
+
 #Install p7zip if not installed
 if [ $(dpkg -l |grep p7zip-full|wc -l) -eq 0 ]; then
 	echo "Installing p7zip-full..."
