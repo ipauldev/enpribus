@@ -274,8 +274,8 @@ d-i partman/confirm_nooverwrite boolean true
 #d-i passwd/root-password-crypted password [MD5 hash]
 
 # To create a normal user account.
-d-i passwd/user-fullname string Paul Hassinger
-d-i passwd/username string paul
+d-i passwd/user-fullname string enpribus
+d-i passwd/username string enpribus
 # Normal user's password, either in clear text
 #d-i passwd/user-password password insecure
 #d-i passwd/user-password-again password insecure
