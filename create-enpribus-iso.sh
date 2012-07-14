@@ -42,7 +42,7 @@ fi
 
 #Preseed ISO
 echo "Please wait... Preseeding ISO..."
-rsync -r ${INCLUDE_ISO_DIR} ${INSTALLER_CD}
+rsync -r ${INCLUDE_ISO_DIR}/ ${INSTALLER_CD}/
 
 #TODO Update seed files with user credentials and temporary password??:
 #echo "temppassword" | mkpasswd -s -H MD5
