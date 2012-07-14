@@ -7,7 +7,7 @@ Automates and provides complete business infrastructures
 ##Description
 The goal of this project is to provide complete automation of setup and provide infrastructure for businesses from start to finish from bare-metal physical servers to scalable cloud application hosting utilizing the DevOps philosophy.
 
-So many options exist for technologies to use (Eucalyptus, ) so this intends to simplify those choices for users to provide a stable and functional end-to-end system for business.
+So many options exist for technologies to use (Eucalyptus, OpenStack, OpenNebula, CloudStack) so this intends to simplify those choices for users to provide a stable and functional end-to-end system for business.
 
 The intention is that this will cover a complete system for business, provide backups, provide auto-provisioning for development, QA environemnts, accounting and billing, to bug tracking, testing, deployments, to production hosting.
 
