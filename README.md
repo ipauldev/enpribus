@@ -42,7 +42,7 @@ The installers wipe the entire hard drive on your system, as it installs Ubuntu 
 
 ## Requirements
 - This is intended to be run with Ubuntu 12.04 64-bit
-- You will require 3 available servers. One server will be a Puppet master (virtualized OK), another server will be a git puppet configuration repo (Virtualized OK, not yet completed), abd another server will be the OpenNebula (Bare-Metal Virtualization CPU instructions required)
+- You will require 3 available servers. One server will be a Puppet master (virtualized OK), another server will be a git puppet configuration repo (Virtualized OK, not yet completed, not sure if I'll make this use existing git repo), and another server will be the OpenNebula (Bare-Metal Virtualization CPU instructions required)
 
 ## Installation
 To start, just run
