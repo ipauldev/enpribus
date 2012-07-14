@@ -44,7 +44,13 @@ The installers wipe the entire hard drive on your system, as it installs Ubuntu 
 - This is intended to be run with Ubuntu 12.04 64-bit
 - You will require 3 available servers. One server will be a Puppet master (virtualized OK), another server will be a git puppet configuration repo (Virtualized OK, not yet completed), abd another server will be the OpenNebula (Bare-Metal Virtualization CPU instructions required)
 
-======================================================================
+## Installation
+To start, just run
+```create-enpribus-iso.sh```
+
+It will create an .iso image in the dist directory.
+
+You may now use that .iso image to write to a CD and install to bare-metal servers, or use the .iso as-is for virtualized environments
 
 ## Latest Status:
 
