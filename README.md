@@ -46,7 +46,9 @@ The installers wipe the entire hard drive on your system, as it installs Ubuntu 
 
 ## Installation
 To start, just run
-```create-enpribus-iso.sh```
+```sh
+create-enpribus-iso.sh
+```
 
 It will create an .iso image in the dist directory.
 
