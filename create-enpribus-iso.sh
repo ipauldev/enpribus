@@ -22,7 +22,7 @@ fi
 #Install p7zip if not installed
 if [ $(dpkg -l |grep p7zip-full|wc -l) -eq 0 ]; then
 	echo "Installing p7zip-full..."
-	sudo apt-get -y install p7zip-full || { echo "ERROR: p7zip-full failed to install. Exiting."; rm -f ${INSTALLER_ISO}; exit 1; }
+	sudo apt-get -y install p7zip-full || { echo "ERROR: p7zip-full failed to install. Exiting."; exit 1; }
 	sudo -k
 fi
 
