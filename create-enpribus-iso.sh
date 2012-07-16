@@ -31,7 +31,7 @@ fi
 if [ ! -f "${INSTALLER_ISO}" ]; then
 	echo "Please wait... downloading Ubuntu..."
     wget -O ${INSTALLER_ISO} ${UBUNTU_ISO_URI} || { echo "ERROR: Ubuntu image download has failed. Exiting."; rm -f ${INSTALLER_ISO}; exit 1; }
-    echo Ubuntu image has been downloaded...
+    echo "Ubuntu image has been downloaded..."
 fi
 
 #Extract ISO if CD Build Directory does not exist
