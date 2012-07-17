@@ -2,6 +2,7 @@
 
 UBUNTU_ISO_URI="http://www.ubuntu.com/start-download?distro=server&bits=64&release=lts"
 UBUNTU_ISO_PRESEED_URI="https://help.ubuntu.com/12.04/installation-guide/example-preseed.txt"
+UBUNTU_RELEASE=precise
 
 ENPRIBUS_REPO=`dirname $0`
 
@@ -109,6 +110,9 @@ sed_escape_replace "[MD5 hash]" "${TEMP_PASS_HASH}" ${INSTALLER_CD_PRESEED_ENPRI
 
 sed_escape_replace "[SSH Public Key]" "${MY_PUBLIC_KEY}" ${INSTALLER_CD_PRESEED_ENPRIBUS_OPENNEBULA}
 sed_escape_replace "[SSH Public Key]" "${MY_PUBLIC_KEY}" ${INSTALLER_CD_PRESEED_ENPRIBUS_PUPPET}
+
+sed_escape_replace "[Ubuntu Release]" "${UBUNTU_RELEASE}" ${INSTALLER_CD_PRESEED_ENPRIBUS_OPENNEBULA}
+sed_escape_replace "[Ubuntu Release]" "${UBUNTU_RELEASE}" ${INSTALLER_CD_PRESEED_ENPRIBUS_PUPPET}
 
 #Create new ISO image
 echo "Please wait... Creating ISO..."
