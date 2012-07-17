@@ -45,14 +45,25 @@ The installers wipe the entire hard drive on your system, as it installs Ubuntu 
 - You will require 3 available servers. One server will be a Puppet master (virtualized OK), another server will be a git puppet configuration repo (Virtualized OK, not yet completed, not sure if I'll make this use existing git repo), and another server will be the OpenNebula (Bare-Metal Virtualization CPU instructions required)
 
 ## Installation
-To start, just run
+To start, if you do not already have it installed, install git-core:
 ```sh
+apt-get update; apt-get install git-core
+```
+
+Download the source:
+```sh
+get clone git@github.com:ipauldev/enpribus.git enpribus
+```
+
+Then, run the installer:
+```sh
+cd enpribus
 create-enpribus-iso.sh
 ```
 
 It will create an .iso image in the dist directory.
 
-You may now use that .iso image to write to a CD and install to bare-metal servers, or use the .iso as-is for virtualized environments
+You may now use that .iso image to write to a CD and install to servers. First, install enpribus Puppet with the .iso, then, install enpribus OpenNebula.
 
 ## Latest Status:
 
