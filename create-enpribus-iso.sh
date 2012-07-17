@@ -126,6 +126,7 @@ echo "Please wait... Creating ISO..."
 mkisofs -r -V "enpribus Install CD" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ${ENPRIBUS_ISO} ${INSTALLER_CD} \
 	&& { echo "ISO Created successfully and is available for installation at:\n${ENPRIBUS_ISO}" ; \
 		echo "\nPlease use the following credentials for the new .iso" ; \
+		echo "(also saved in ${CREDENTIALS})" ; \
 		echo "Username: ${ENPRIBUS_USER}" ; \
 		echo "Password: ${TEMP_PASS}" ; \
 		echo "Username: ${ENPRIBUS_USER}\nPassword: ${TEMP_PASS}" > ${CREDENTIALS} ; \
