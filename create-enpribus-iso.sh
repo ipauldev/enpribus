@@ -37,7 +37,7 @@ ISO_PRESEED_ENPRIBUS_PUPPET=${INCLUDE_ISO_DIR}/preseed/enpribus-puppet.seed
 ENPRIBUS_USER=`id -nu`
 
 #SSH Public Key
-MY_PUBLIC_KEY=`cat ~/.ssh/id_rsa.puba` > /dev/null 2>&1
+MY_PUBLIC_KEY=`cat ~/.ssh/id_rsa.pub` > /dev/null 2>&1
 
 #sed replace with and escape special characters
 sed_escape_replace () {
