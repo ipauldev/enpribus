@@ -2,7 +2,7 @@
 # Custom
 ###############################
 
-d-i pkgsel/include string openssh-server puppetmaster
+d-i pkgsel/include string openssh-server puppet puppetmaster
 d-i pkgsel/update-policy select unattended-upgrades
 tasksel	tasksel/skip-tasks	string standard
 d-i finish-install/reboot_in_progress note
