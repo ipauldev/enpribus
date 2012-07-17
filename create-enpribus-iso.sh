@@ -33,6 +33,9 @@ ISO_PRESEED_ENPRIBUS_OPENNEBULA=${INCLUDE_ISO_DIR}/preseed/enpribus-opennebula.s
 INSTALLER_CD_PRESEED_ENPRIBUS_PUPPET=${INSTALLER_CD}/preseed/enpribus-puppet.seed
 ISO_PRESEED_ENPRIBUS_PUPPET=${INCLUDE_ISO_DIR}/preseed/enpribus-puppet.seed
 
+#Path for credentials
+CREDENTIALS=${BUILD_DIR}/credentials.txt
+
 #User Account
 ENPRIBUS_USER=`id -nu`
 
@@ -114,4 +117,5 @@ mkisofs -r -V "enpribus Install CD" -cache-inodes -J -l -b isolinux/isolinux.bin
 		echo "\nPlease use the following credentials for the new .iso" ; \
 		echo "Username: ${ENPRIBUS_USER}" ; \
 		echo "Password: ${TEMP_PASS}" ; \
+		echo "Username: ${ENPRIBUS_USER}\nPassword: ${TEMP_PASS}" > ${CREDENTIALS} ; \
 	}
