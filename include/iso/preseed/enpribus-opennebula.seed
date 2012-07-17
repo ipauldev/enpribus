@@ -8,4 +8,8 @@ tasksel	tasksel/skip-tasks	string standard
 d-i finish-install/reboot_in_progress note
 d-i partman-lvm/confirm_nooverwrite boolean true
 
-d-i preseed/late_command string cp -a /cdrom/preseed/conf/enpribus-opennebula.sh /target/tmp/preseed.sh && in-target chmod +x /tmp/preseed.sh && in-target /tmp/preseed.sh paul 'ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAv2yHV1ClZZNSFY2Q40SeGMh2emUqkt4+fADHXesuD/TP+QC/aqi/VIl0rK3uZLcfNR7gAjE1miAYKCRIUppffNo2A550LShy7nfJn7cMpCxD2XT5zBKAY83/vD14mfzyu1Oo2Iygl7unkBh1Thl5fyzbuGu+4yNrjv+Nd8GH01+XK1o51xICC2CkmDFuBW87zVtPyiQAAV60s/nFwFt3HHV/BIE6gGMz5nA/PMoJXWTktNyBOsYh2IzfCGlpEc+2kb81VvCAUoD6AnJ9A367WA6JG4o3ufkuFhzfd0GWIeoCfubNalcUwS6pkmz97I4fqzGe02M7mNzgIHKeLLorSw== phassinger'
+d-i passwd/user-fullname string [Enpribus User]
+d-i passwd/username string [Enpribus User]
+d-i passwd/user-password-crypted password [MD5 hash]
+
+d-i preseed/late_command string cp -a /cdrom/preseed/conf/enpribus-opennebula.sh /target/tmp/preseed.sh && in-target chmod +x /tmp/preseed.sh && in-target /tmp/preseed.sh [Enpribus User] '[SSH Public Key]'

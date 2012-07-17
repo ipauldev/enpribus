@@ -33,6 +33,17 @@ ISO_PRESEED_ENPRIBUS_OPENNEBULA=${INCLUDE_ISO_DIR}/preseed/enpribus-opennebula.s
 INSTALLER_CD_PRESEED_ENPRIBUS_PUPPET=${INSTALLER_CD}/preseed/enpribus-puppet.seed
 ISO_PRESEED_ENPRIBUS_PUPPET=${INCLUDE_ISO_DIR}/preseed/enpribus-puppet.seed
 
+#User Account
+ENPRIBUS_USER=`id -nu`
+
+#SSH Public Key
+MY_PUBLIC_KEY=`cat ~/.ssh/id_rsa.puba` > /dev/null 2>&1
+
+#sed replace with and escape special characters
+sed_escape_replace () {
+  sed -i "s/$(echo $1 | sed -e 's/\([[\/.*]\|\]\)/\\&/g')/$(echo $2 | sed -e 's/[\/&]/\\&/g')/g" $3
+}
+
 #Ensure helper directories exist
 if [ ! -d "${BUILD_DIR}" ]; then
 	mkdir ${BUILD_DIR}
@@ -83,11 +94,24 @@ cat ${EXAMPLE_PRESEED} > ${INSTALLER_CD_PRESEED_ENPRIBUS_PUPPET}
 cat ${INSTALLER_CD_PRESEED_OS} >> ${INSTALLER_CD_PRESEED_ENPRIBUS_PUPPET}
 cat ${ISO_PRESEED_ENPRIBUS_PUPPET} >> ${INSTALLER_CD_PRESEED_ENPRIBUS_PUPPET}
 
-#TODO Update seed files with user credentials and temporary password??:
-#echo "temppassword" | mkpasswd -s -H MD5
+#TODO Update seed files with user credentials and temporary password:
+TEMP_PASS=`tr -dc "[:alnum:][:punct:]" < /dev/urandom | head -c 10`
+TEMP_PASS_HASH=`echo ${TEMP_PASS} | mkpasswd -s -H MD5`
+
+sed_escape_replace "[Enpribus User]" "${ENPRIBUS_USER}" ${INSTALLER_CD_PRESEED_ENPRIBUS_OPENNEBULA}
+sed_escape_replace "[Enpribus User]" "${ENPRIBUS_USER}" ${INSTALLER_CD_PRESEED_ENPRIBUS_PUPPET}
+
+sed_escape_replace "[MD5 hash]" "${TEMP_PASS_HASH}" ${INSTALLER_CD_PRESEED_ENPRIBUS_OPENNEBULA}
+sed_escape_replace "[MD5 hash]" "${TEMP_PASS_HASH}" ${INSTALLER_CD_PRESEED_ENPRIBUS_PUPPET}
+
+sed_escape_replace "[SSH Public Key]" "${MY_PUBLIC_KEY}" ${INSTALLER_CD_PRESEED_ENPRIBUS_OPENNEBULA}
+sed_escape_replace "[SSH Public Key]" "${MY_PUBLIC_KEY}" ${INSTALLER_CD_PRESEED_ENPRIBUS_PUPPET}
 
 #Create new ISO image
 echo "Please wait... Creating ISO..."
 mkisofs -r -V "enpribus Install CD" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ${ENPRIBUS_ISO} ${INSTALLER_CD} \
-	&& echo "ISO Created successfully and is available for installation at:\n${ENPRIBUS_ISO}"
-
+	&& { echo "ISO Created successfully and is available for installation at:\n${ENPRIBUS_ISO}" ; \
+		echo "\nPlease use the following credentials for the new .iso" ; \
+		echo "Username: ${ENPRIBUS_USER}" ; \
+		echo "Password: ${TEMP_PASS}" ; \
+	}
