@@ -10,3 +10,10 @@ chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.ssh/
 chmod -R u=rwX,go= /home/${USERNAME}/.ssh/
 
 #setup Puppet Master
+wget http://apt.puppetlabs.com/puppetlabs-release-precise.deb
+dpkg -i puppetlabs-release-precise.deb
+rm puppetlabs-release-precise.deb
+
+#upgrade packages
+apt-get update
+apt-get -y upgrade
