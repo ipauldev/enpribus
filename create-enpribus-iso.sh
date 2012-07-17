@@ -56,12 +56,19 @@ if [ ! -d "${DIST_DIR}" ]; then
 	mkdir ${DIST_DIR}
 fi
 
+#Install whois if not installed
+if [ $(dpkg -l |grep whois|wc -l) -eq 0 ]; then
+	echo "Installing whois.."
+	sudo apt-get -y install whois || { echo "ERROR: whois failed to install. Exiting."; exit 1; }
+fi
+
 #Install p7zip if not installed
 if [ $(dpkg -l |grep p7zip-full|wc -l) -eq 0 ]; then
 	echo "Installing p7zip-full..."
 	sudo apt-get -y install p7zip-full || { echo "ERROR: p7zip-full failed to install. Exiting."; exit 1; }
-	sudo -k
 fi
+
+sudo -k
 
 #Retrieve Ubuntu ISO image if it does not exist
 #NOTE: If you wish to bypass the download, simply place the Ubuntu installer in this location manually
