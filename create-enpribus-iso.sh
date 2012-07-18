@@ -79,7 +79,7 @@ sudo -k
 #Generate SSH key if it does not exist
 if [ ! -f "${MY_PRIVATE_KEY_PATH}" ]; then
 	echo "Generating SSH Keys..."
-	mkdir ~/.ssh ; chmod 700 ~/.ssh; ssh-keygen -t rsa || { echo "ERROR: SSH Key generation failed. Exiting."; exit 1; }
+	mkdir -p ~/.ssh ; chmod 700 ~/.ssh; ssh-keygen -At rsa || { echo "ERROR: SSH Key generation failed. Exiting."; exit 1; }
 fi
 
 #Retrieve Ubuntu ISO image if it does not exist
