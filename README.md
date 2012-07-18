@@ -52,7 +52,7 @@ apt-get update; apt-get install git-core
 
 Download the source:
 ```sh
-get clone git@github.com:ipauldev/enpribus.git enpribus
+git clone git://github.com/ipauldev/enpribus.git enpribus
 ```
 
 Then, run the installer:
