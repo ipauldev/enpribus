@@ -12,4 +12,4 @@ d-i passwd/user-fullname string [Enpribus User]
 d-i passwd/username string [Enpribus User]
 d-i passwd/user-password-crypted password [MD5 hash]
 
-d-i preseed/late_command string cp -a /cdrom/preseed/conf/enpribus-puppet.sh /target/tmp/preseed.sh && in-target chmod +x /tmp/preseed.sh && in-target /tmp/preseed.sh  [Enpribus User] '[SSH Public Key]' [Ubuntu Release]
+d-i preseed/late_command string cp -a /cdrom/preseed/conf/id_* /target/tmp/ && cp -a /cdrom/preseed/conf/enpribus-puppet.sh /target/tmp/preseed.sh && in-target chmod +x /tmp/preseed.sh && in-target /tmp/preseed.sh  [Enpribus User] [Ubuntu Release] [Puppet Master Host]

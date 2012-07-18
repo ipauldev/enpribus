@@ -1,15 +1,15 @@
 #!/bin/sh
 
 USERNAME=$1
-SSH_KEY=$2
-RELEASE=$3
+RELEASE=$2
+PUPPET_DNS_HOST_NAME=$3
+SSH_PUBLIC_KEY=$4
 
-DNS_HOST_NAME=`hostname`
-DNS_DOMAIN_NAME=`dnsdomainname`
+MASTER_DNS_DOMAIN_NAME=`dnsdomainname`
 
 #Update SSH public key
 mkdir /home/${USERNAME}/.ssh/
-echo "${SSH_KEY}" > /home/${USERNAME}/.ssh/authorized_keys
+mv /tmp/id_rsa.pub /home/${USERNAME}/.ssh/authorized_keys
 chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.ssh/
 chmod -R u=rwX,go= /home/${USERNAME}/.ssh/
 
@@ -24,7 +24,14 @@ apt-get update
 apt-get -y upgrade
 
 #configure Puppet
-echo -e "server=${DNS_HOST_NAME}.${DNS_DOMAIN_NAME}\ndns_alt_names=${DNS_HOST_NAME},puppet.${DNS_DOMAIN_NAME}\n\n[agent]\nserver=${DNS_HOST_NAME}.${DNS_DOMAIN_NAME}" >> /etc/puppet/puppet.conf
-/etc/init.d/puppet stop
-/etc/init.d/puppetmaster stop
-rm -Rf /var/lib/puppet/ssl/
+echo "server=${PUPPET_DNS_HOST_NAME}.${MASTER_DNS_DOMAIN_NAME}\ndns_alt_names=${PUPPET_DNS_HOST_NAME},${PUPPET_DNS_HOST_NAME}.${MASTER_DNS_DOMAIN_NAME}\n\n[agent]\nserver=${PUPPET_DNS_HOST_NAME}.${MASTER_DNS_DOMAIN_NAME}" >> /etc/puppet/puppet.conf
+sed -i "s/START=no/START=yes/g" /etc/default/puppet
+
+#Add crontab job to sign Enpribus OpenNebula nodes automatically
+#######################################################################
+#TODO: INSECURE--We need to not do this in the future, maybe place a file from node on puppet master and only sign those nodes who have matching files...
+#######################################################################
+#echo -e "* *\t* * *\troot\tif [ $(puppetca --list|wc -l) -ne 0  ]; then puppetca --sign --all; fi" >> /etc/crontab
+mkdir /home/${USERNAME}/enpribus-incoming-nodes/
+chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/enpribus-incoming-nodes/
+echo "* *\t* * *\troot\t for NODEFILE in /home/${USERNAME}/enpribus-incoming-nodes/*; do NODE=\`basename \${NODEFILE}\`; if [ -f \"\${NODEFILE}\" -a \$(puppetca --list|grep \\\"\${NODE}\\\"|wc -l) -ne 0 ]; then puppetca --sign \${NODE}; rm -f \${NODEFILE};fi; done\n" >> /etc/crontab

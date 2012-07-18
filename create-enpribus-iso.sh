@@ -4,15 +4,25 @@ UBUNTU_ISO_URI="http://www.ubuntu.com/start-download?distro=server&bits=64&relea
 UBUNTU_ISO_PRESEED_URI="https://help.ubuntu.com/12.04/installation-guide/example-preseed.txt"
 UBUNTU_RELEASE=precise
 
-ENPRIBUS_REPO=`dirname $0`
+#Puppet master Hostname
+PUPPET_DNS_HOST_NAME=puppet
+
+#User Account
+ENPRIBUS_USER=`id -nu`
+
+#SSH Keys
+MY_PRIVATE_KEY_PATH=~/.ssh/id_rsa
+MY_PUBLIC_KEY_PATH=~/.ssh/id_rsa.pub
 
 #Primary Paths
+ENPRIBUS_REPO=`dirname $0`
 BUILD_DIR=${ENPRIBUS_REPO}/build
 DIST_DIR=${ENPRIBUS_REPO}/dist
 
 #Include Directory Paths
 INCLUDE_DIR=${ENPRIBUS_REPO}/include
 INCLUDE_ISO_DIR=${INCLUDE_DIR}/iso
+INCLUDE_ISO_PRESEED=${INCLUDE_ISO_DIR}/preseed
 
 #Downloaded Files Paths
 INSTALLER_ISO=${BUILD_DIR}/installer.iso
@@ -24,24 +34,21 @@ ENPRIBUS_ISO=${DIST_DIR}/enpribus.iso
 #Working Dir for New CD
 INSTALLER_CD=${BUILD_DIR}/installer-cd
 
-#OS Preseed path
-INSTALLER_CD_PRESEED_OS=${INSTALLER_CD}/preseed/ubuntu-server.seed
+#Preseed working paths
+INSTALLER_CD_PRESEED=${INSTALLER_CD}/preseed
+INSTALLER_CD_PRESEED_CONF=${INSTALLER_CD_PRESEED}/conf
+INSTALLER_CD_PRESEED_OS=${INSTALLER_CD_PRESEED}/ubuntu-server.seed
+
 
 #Customized Preseed Files
-INSTALLER_CD_PRESEED_ENPRIBUS_OPENNEBULA=${INSTALLER_CD}/preseed/enpribus-opennebula.seed
-ISO_PRESEED_ENPRIBUS_OPENNEBULA=${INCLUDE_ISO_DIR}/preseed/enpribus-opennebula.seed
+INSTALLER_CD_PRESEED_ENPRIBUS_OPENNEBULA=${INSTALLER_CD_PRESEED}/enpribus-opennebula.seed
+ISO_PRESEED_ENPRIBUS_OPENNEBULA=${INCLUDE_ISO_PRESEED}/enpribus-opennebula.seed
 
-INSTALLER_CD_PRESEED_ENPRIBUS_PUPPET=${INSTALLER_CD}/preseed/enpribus-puppet.seed
-ISO_PRESEED_ENPRIBUS_PUPPET=${INCLUDE_ISO_DIR}/preseed/enpribus-puppet.seed
+INSTALLER_CD_PRESEED_ENPRIBUS_PUPPET=${INSTALLER_CD_PRESEED}/enpribus-puppet.seed
+ISO_PRESEED_ENPRIBUS_PUPPET=${INCLUDE_ISO_PRESEED}/enpribus-puppet.seed
 
 #Path for credentials
 CREDENTIALS=${BUILD_DIR}/credentials.txt
-
-#User Account
-ENPRIBUS_USER=`id -nu`
-
-#SSH Public Key
-MY_PUBLIC_KEY=`cat ~/.ssh/id_rsa.pub` > /dev/null 2>&1
 
 #sed replace with and escape special characters
 sed_escape_replace () {
@@ -69,6 +76,12 @@ if [ $(dpkg -l |grep p7zip-full|wc -l) -eq 0 ]; then
 fi
 
 sudo -k
+
+#Generate SSH key if it does not exist
+if [ ! -f "${MY_PRIVATE_KEY_PATH}" ]; then
+	echo "Generating SSH Keys..."
+	sudo mkdir ~/.ssh ; chmod 700 ~/.ssh; ssh-keygen -t rsa || { echo "ERROR: SSH Key generation failed. Exiting."; exit 1; }
+fi
 
 #Retrieve Ubuntu ISO image if it does not exist
 #NOTE: If you wish to bypass the download, simply place the Ubuntu installer in this location manually
@@ -105,6 +118,9 @@ cat ${EXAMPLE_PRESEED} > ${INSTALLER_CD_PRESEED_ENPRIBUS_PUPPET}
 cat ${INSTALLER_CD_PRESEED_OS} >> ${INSTALLER_CD_PRESEED_ENPRIBUS_PUPPET}
 cat ${ISO_PRESEED_ENPRIBUS_PUPPET} >> ${INSTALLER_CD_PRESEED_ENPRIBUS_PUPPET}
 
+cp ${MY_PRIVATE_KEY_PATH} ${INSTALLER_CD_PRESEED_CONF}
+cp ${MY_PUBLIC_KEY_PATH} ${INSTALLER_CD_PRESEED_CONF}
+
 #TODO Update seed files with user credentials and temporary password:
 TEMP_PASS=`tr -dc "[:alnum:][:punct:]" < /dev/urandom | head -c 10`
 TEMP_PASS_HASH=`echo ${TEMP_PASS} | mkpasswd -s -H MD5`
@@ -115,11 +131,11 @@ sed_escape_replace "[Enpribus User]" "${ENPRIBUS_USER}" ${INSTALLER_CD_PRESEED_E
 sed_escape_replace "[MD5 hash]" "${TEMP_PASS_HASH}" ${INSTALLER_CD_PRESEED_ENPRIBUS_OPENNEBULA}
 sed_escape_replace "[MD5 hash]" "${TEMP_PASS_HASH}" ${INSTALLER_CD_PRESEED_ENPRIBUS_PUPPET}
 
-sed_escape_replace "[SSH Public Key]" "${MY_PUBLIC_KEY}" ${INSTALLER_CD_PRESEED_ENPRIBUS_OPENNEBULA}
-sed_escape_replace "[SSH Public Key]" "${MY_PUBLIC_KEY}" ${INSTALLER_CD_PRESEED_ENPRIBUS_PUPPET}
-
 sed_escape_replace "[Ubuntu Release]" "${UBUNTU_RELEASE}" ${INSTALLER_CD_PRESEED_ENPRIBUS_OPENNEBULA}
 sed_escape_replace "[Ubuntu Release]" "${UBUNTU_RELEASE}" ${INSTALLER_CD_PRESEED_ENPRIBUS_PUPPET}
+
+sed_escape_replace "[Puppet Master Host]" "${PUPPET_DNS_HOST_NAME}" ${INSTALLER_CD_PRESEED_ENPRIBUS_OPENNEBULA}
+sed_escape_replace "[Puppet Master Host]" "${PUPPET_DNS_HOST_NAME}" ${INSTALLER_CD_PRESEED_ENPRIBUS_PUPPET}
 
 #Create new ISO image
 echo "Please wait... Creating ISO..."
