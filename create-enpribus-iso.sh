@@ -39,7 +39,6 @@ INSTALLER_CD_PRESEED=${INSTALLER_CD}/preseed
 INSTALLER_CD_PRESEED_CONF=${INSTALLER_CD_PRESEED}/conf
 INSTALLER_CD_PRESEED_OS=${INSTALLER_CD_PRESEED}/ubuntu-server.seed
 
-
 #Customized Preseed Files
 INSTALLER_CD_PRESEED_ENPRIBUS_OPENNEBULA=${INSTALLER_CD_PRESEED}/enpribus-opennebula.seed
 ISO_PRESEED_ENPRIBUS_OPENNEBULA=${INCLUDE_ISO_PRESEED}/enpribus-opennebula.seed
@@ -80,7 +79,7 @@ sudo -k
 #Generate SSH key if it does not exist
 if [ ! -f "${MY_PRIVATE_KEY_PATH}" ]; then
 	echo "Generating SSH Keys..."
-	sudo mkdir ~/.ssh ; chmod 700 ~/.ssh; ssh-keygen -t rsa || { echo "ERROR: SSH Key generation failed. Exiting."; exit 1; }
+	mkdir ~/.ssh ; chmod 700 ~/.ssh; ssh-keygen -t rsa || { echo "ERROR: SSH Key generation failed. Exiting."; exit 1; }
 fi
 
 #Retrieve Ubuntu ISO image if it does not exist
