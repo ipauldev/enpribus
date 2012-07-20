@@ -47,7 +47,7 @@ The installers wipe the entire hard drive on your system, as it installs Ubuntu 
 ## Installation
 To start, if you do not already have it installed, install git-core:
 ```sh
-apt-get update; apt-get install git-core
+sudo apt-get update; apt-get install git-core
 ```
 
 Download the source:
@@ -58,7 +58,7 @@ git clone git://github.com/ipauldev/enpribus.git enpribus
 Then, run the installer:
 ```sh
 cd enpribus
-create-enpribus-iso.sh
+./create-enpribus-iso.sh
 ```
 
 It will create an .iso image in the dist directory.
