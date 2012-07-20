@@ -47,7 +47,7 @@ INSTALLER_CD_PRESEED_ENPRIBUS_PUPPET=${INSTALLER_CD_PRESEED}/enpribus-puppet.see
 ISO_PRESEED_ENPRIBUS_PUPPET=${INCLUDE_ISO_PRESEED}/enpribus-puppet.seed
 
 #Path for credentials
-CREDENTIALS=${BUILD_DIR}/credentials.txt
+CREDENTIALS=${DIST_DIR}/credentials.txt
 
 #sed replace with and escape special characters
 sed_escape_replace () {
