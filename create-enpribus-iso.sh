@@ -94,7 +94,7 @@ fi
 #NOTE: If you wish to bypass the download, simply place the example preseed in this location manually
 if [ ! -f "${EXAMPLE_PRESEED}" ]; then
 	echo "Please wait... downloading Ubuntu..."
-    wget -O ${EXAMPLE_PRESEED} ${UBUNTU_ISO_PRESEED_URI} || { echo "ERROR: Ubuntu example preseed download has failed. Exiting."; rm -f ${EXAMPLE_PRESEED}; exit 1; }
+    wget --no-check-certificate -O ${EXAMPLE_PRESEED} ${UBUNTU_ISO_PRESEED_URI} || { echo "ERROR: Ubuntu example preseed download has failed. Exiting."; rm -f ${EXAMPLE_PRESEED}; exit 1; }
     echo "Ubuntu example preseed has been downloaded..."
 fi
 
